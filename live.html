@@ -108,13 +108,12 @@
     const scoreAInput = () => document.getElementById('scoreA');
     const scoreBInput = () => document.getElementById('scoreB');
 
-    // Show the latest live match in a box centered
-    function showLatestLiveMatch() {
+    // Show the latest live match in a box centered, real-time updates
+    function listenLatestLiveMatch() {
       db.collection('liveResults')
         .orderBy('timestamp', 'desc')
         .limit(1)
-        .get()
-        .then(snapshot => {
+        .onSnapshot(snapshot => {
           if (snapshot.empty) {
             liveMatchBox().innerHTML = `<h2>No live matches currently</h2>`;
             return;
@@ -125,9 +124,6 @@
             <div class="teams">${d.teamA} vs ${d.teamB}</div>
             <div class="score">${d.scoreA} - ${d.scoreB}</div>
           `;
-        })
-        .catch(err => {
-          liveMatchBox().innerHTML = `<p>Error loading live match: ${err.message}</p>`;
         });
     }
 
@@ -176,7 +172,6 @@
         teamBInput().value = '';
         scoreAInput().value = '';
         scoreBInput().value = '';
-        showLatestLiveMatch(); // Refresh live match box
       }).catch(err => alert('Error saving result: ' + err.message));
     }
 
@@ -204,9 +199,8 @@
         scoreAInput().disabled = true;
         scoreBInput().disabled = true;
       }
-      showLatestLiveMatch();
+      listenLatestLiveMatch();
     });
-
   </script>
 </head>
 <body>
@@ -222,7 +216,6 @@
 
   <main>
     <div id="live-match-box">
-      <!-- Live match details will appear here -->
       Loading live match...
     </div>
 
