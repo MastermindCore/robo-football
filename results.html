@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Results | Robo-Football</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="data.js" defer></script>
+  <script defer>
+    window.onload = () => {
+      const container = document.getElementById('results');
+      const playedMatches = fixtures.filter(match => match.result && match.result.trim() !== "");
+      if (playedMatches.length === 0) {
+        container.innerHTML = "<p>No results available yet.</p>";
+        return;
+      }
+
+      let html = '<table><thead><tr><th>Match</th><th>Teams</th><th>Result</th></tr></thead><tbody>';
+      playedMatches.forEach(match => {
+        html += `
+          <tr>
+            <td>${match.match}</td>
+            <td>${match.teamA} vs ${match.teamB}</td>
+            <td>${match.result}</td>
+          </tr>`;
+      });
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    };
+  </script>
+</head>
+<body>
+  <header>
+    <h1>🤖 Robo-Football</h1>
+    <nav>
+      <a href="fixtures.html">Fixtures</a>
+      <a href="teams.html">Teams</a>
+      <a href="results.html">Results</a>
+      <a href="live.html">Live Results</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>📈 Match Results</h2>
+    <div id="results">
+      <!-- Results table inserted here -->
+    </div>
+  </main>
+</body>
+</html>
