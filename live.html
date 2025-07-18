@@ -83,6 +83,13 @@
       text-align: center;
       width: 320px;
     }
+    #clear-btn {
+      background-color: #e53935;
+      margin-top: 10px;
+    }
+    #clear-btn:hover {
+      background-color: #d32f2f;
+    }
   </style>
 
   <!-- Firebase SDKs -->
@@ -108,6 +115,9 @@
     const scoreAInput = () => document.getElementById('scoreA');
     const scoreBInput = () => document.getElementById('scoreB');
 
+    // Reference to the document storing the current match info
+    const currentMatchDoc = db.collection('settings').doc('currentMatch');
+
     // Show the latest live match in a box centered, real-time updates
     function listenLatestLiveMatch() {
       db.collection('liveResults')
@@ -127,6 +137,27 @@
         });
     }
 
+    // Load saved current match data into inputs
+    async function loadCurrentMatch() {
+      try {
+        const doc = await currentMatchDoc.get();
+        if (doc.exists) {
+          const data = doc.data();
+          teamAInput().value = data.teamA || '';
+          teamBInput().value = data.teamB || '';
+          scoreAInput().value = data.scoreA != null ? data.scoreA : '';
+          scoreBInput().value = data.scoreB != null ? data.scoreB : '';
+        } else {
+          teamAInput().value = '';
+          teamBInput().value = '';
+          scoreAInput().value = '';
+          scoreBInput().value = '';
+        }
+      } catch (err) {
+        console.error('Error loading current match:', err);
+      }
+    }
+
     // Login function
     function login() {
       const email = document.getElementById('email').value.trim();
@@ -140,7 +171,7 @@
       auth.signOut();
     }
 
-    // Save the new live result
+    // Save the new live result and update currentMatch doc
     function saveResult() {
       const teamA = teamAInput().value.trim();
       const teamB = teamBInput().value.trim();
@@ -160,6 +191,7 @@
         return;
       }
 
+      // Add new live result record
       db.collection('liveResults').add({
         teamA,
         teamB,
@@ -167,12 +199,30 @@
         scoreB,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
+        // Update the currentMatch doc with the new teams and scores
+        return currentMatchDoc.set({
+          teamA,
+          teamB,
+          scoreA,
+          scoreB,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      }).then(() => {
         alert('Live result saved!');
+      }).catch(err => alert('Error saving result: ' + err.message));
+    }
+
+    // Clear the saved current match data and inputs
+    function clearCurrentMatch() {
+      if (!confirm('Clear current teams and scores?')) return;
+
+      currentMatchDoc.delete().then(() => {
         teamAInput().value = '';
         teamBInput().value = '';
         scoreAInput().value = '';
         scoreBInput().value = '';
-      }).catch(err => alert('Error saving result: ' + err.message));
+        alert('Current match cleared.');
+      }).catch(err => alert('Error clearing current match: ' + err.message));
     }
 
     // Manage UI based on auth state
@@ -182,18 +232,17 @@
         loginForm().style.display = 'none';
         matchEditor().style.display = 'block';
 
-        // Enable inputs after login
         teamAInput().disabled = false;
         teamBInput().disabled = false;
         scoreAInput().disabled = false;
         scoreBInput().disabled = false;
 
+        loadCurrentMatch();
       } else {
         userInfo().textContent = '';
         loginForm().style.display = 'block';
         matchEditor().style.display = 'none';
 
-        // Disable inputs before login
         teamAInput().disabled = true;
         teamBInput().disabled = true;
         scoreAInput().disabled = true;
@@ -243,6 +292,7 @@
       <input id="scoreB" type="number" min="0" placeholder="Score" disabled />
 
       <button onclick="saveResult()">Save Live Result</button>
+      <button id="clear-btn" onclick="clearCurrentMatch()">Clear Current Match</button>
     </div>
   </main>
 </body>
