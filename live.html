@@ -1,256 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Live Results & Referee Panel | Robo-Football</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #e3f2fd;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 0; padding: 20px;
-      min-height: 100vh;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #0d47a1;
-      font-weight: bold;
-    }
-    #live-match-box {
-      background: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      padding: 30px;
-      border-radius: 10px;
-      width: 320px;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    #live-match-box h2 {
-      margin: 0 0 10px 0;
-      font-size: 1.5rem;
-      color: #0d47a1;
-    }
-    #live-match-box .teams {
-      font-size: 1.2rem;
-      margin-bottom: 15px;
-    }
-    #live-match-box .score {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #1976d2;
-      margin-bottom: 10px;
-    }
-    #login-form, #match-editor {
-      background: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.15);
-      padding: 20px;
-      border-radius: 8px;
-      width: 320px;
-      margin-bottom: 20px;
-    }
-    #login-form input, #match-editor input {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-    #login-form button, #match-editor button {
-      width: 100%;
-      padding: 10px;
-      background-color: #0d47a1;
-      color: white;
-      font-size: 1rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    #login-form button:hover, #match-editor button:hover {
-      background-color: #1565c0;
-    }
-    #user-info {
-      margin-bottom: 10px;
-      font-weight: bold;
-      color: #0d47a1;
-      text-align: center;
-      width: 320px;
-    }
-    #clear-btn {
-      background-color: #e53935;
-      margin-top: 10px;
-    }
-    #clear-btn:hover {
-      background-color: #d32f2f;
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>Live Results & Referee Panel | Robo-Football</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #e3f2fd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0; padding: 20px;
+    min-height: 100vh;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #0d47a1;
+    font-weight: bold;
+  }
+  #timer-box {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #d32f2f;
+    margin-bottom: 20px;
+    background: white;
+    padding: 15px 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+    width: 350px;
+    text-align: center;
+  }
+  #live-match-box {
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    padding: 30px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  #live-match-box h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+    color: #0d47a1;
+  }
+  #live-match-box .teams {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+  #live-match-box .score {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #1976d2;
+    margin-bottom: 10px;
+  }
+  #login-form, #match-editor {
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    padding: 20px;
+    border-radius: 8px;
+    width: 350px;
+    margin-bottom: 20px;
+  }
+  #login-form input, #match-editor input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  #login-form button, #match-editor button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0d47a1;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #login-form button:hover, #match-editor button:hover {
+    background-color: #1565c0;
+  }
+  #user-info {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #0d47a1;
+    text-align: center;
+    width: 350px;
+  }
+  #clear-btn {
+    background-color: #e53935;
+    margin-top: 10px;
+  }
+  #clear-btn:hover {
+    background-color: #d32f2f;
+  }
+  #timer-controls button {
+    width: 32%;
+    margin: 5px 1%;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #0d47a1;
+    color: white;
+    cursor: pointer;
+  }
+  #timer-controls button:hover {
+    background-color: #1565c0;
+  }
+</style>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore-compat.js"></script>
-  
-  <script src="firebase-config.js"></script>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore-compat.js"></script>
 
-  <script>
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+<script src="firebase-config.js"></script>
 
-    // DOM elements
-    const liveMatchBox = () => document.getElementById('live-match-box');
-    const loginForm = () => document.getElementById('login-form');
-    const matchEditor = () => document.getElementById('match-editor');
-    const userInfo = () => document.getElementById('user-info');
+<script>
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
-    const teamAInput = () => document.getElementById('teamA');
-    const teamBInput = () => document.getElementById('teamB');
-    const scoreAInput = () => document.getElementById('scoreA');
-    const scoreBInput = () => document.getElementById('scoreB');
+  // DOM elements
+  const timerBox = () => document.getElementById('timer-box');
+  const liveMatchBox = () => document.getElementById('live-match-box');
+  const loginForm = () => document.getElementById('login-form');
+  const matchEditor = () => document.getElementById('match-editor');
+  const userInfo = () => document.getElementById('user-info');
 
-    // Reference to the document storing the current match info
-    const currentMatchDoc = db.collection('settings').doc('currentMatch');
+  const teamAInput = () => document.getElementById('teamA');
+  const teamBInput = () => document.getElementById('teamB');
+  const scoreAInput = () => document.getElementById('scoreA');
+  const scoreBInput = () => document.getElementById('scoreB');
 
-    // Show the latest live match in a box centered, real-time updates
-    function listenLatestLiveMatch() {
-      db.collection('liveResults')
-        .orderBy('timestamp', 'desc')
-        .limit(1)
-        .onSnapshot(snapshot => {
-          if (snapshot.empty) {
-            liveMatchBox().innerHTML = `<h2>No live matches currently</h2>`;
-            return;
-          }
-          const d = snapshot.docs[0].data();
-          liveMatchBox().innerHTML = `
-            <h2>Live Match</h2>
-            <div class="teams">${d.teamA} vs ${d.teamB}</div>
-            <div class="score">${d.scoreA} - ${d.scoreB}</div>
-          `;
-        });
+  const TIMER_DURATION = 300; // 5 minutes in seconds
+
+  // Firestore refs
+  const currentMatchDoc = db.collection('settings').doc('currentMatch');
+  const timerDoc = db.collection('settings').doc('matchTimer');
+  const liveResultsCollection = db.collection('liveResults');
+
+  // Format seconds to MM:SS
+  function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+  }
+
+  // --- TIMER LOGIC ---
+  // Variables to track timer state locally
+  let timerInterval = null;
+  let timerData = null; // {startTime, running, pausedAt}
+
+  // Calculate time left based on Firestore timerData
+  function calculateTimeLeft() {
+    if (!timerData) return TIMER_DURATION;
+    const { startTime, running, pausedAt } = timerData;
+    if (!startTime) return TIMER_DURATION;
+    const now = Date.now();
+
+    if (running) {
+      const elapsed = (now - startTime.toMillis()) / 1000 + pausedAt;
+      return Math.max(0, TIMER_DURATION - elapsed);
+    } else {
+      return Math.max(0, TIMER_DURATION - pausedAt);
     }
+  }
 
-    // Load saved current match data into inputs
-    async function loadCurrentMatch() {
-      try {
-        const doc = await currentMatchDoc.get();
-        if (doc.exists) {
-          const data = doc.data();
-          teamAInput().value = data.teamA || '';
-          teamBInput().value = data.teamB || '';
-          scoreAInput().value = data.scoreA != null ? data.scoreA : '';
-          scoreBInput().value = data.scoreB != null ? data.scoreB : '';
-        } else {
-          teamAInput().value = '';
-          teamBInput().value = '';
-          scoreAInput().value = '';
-          scoreBInput().value = '';
-        }
-      } catch (err) {
-        console.error('Error loading current match:', err);
+  // Update timer display every second
+  function startTimerDisplay() {
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      const timeLeft = calculateTimeLeft();
+      timerBox().textContent = formatTime(Math.floor(timeLeft));
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
       }
-    }
+    }, 1000);
+  }
 
-    // Login function
-    function login() {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      auth.signInWithEmailAndPassword(email, password)
-        .catch(err => alert('Login failed: ' + err.message));
-    }
+  // Listen for timer doc changes in Firestore
+  function listenTimer() {
+    timerDoc.onSnapshot(doc => {
+      timerData = doc.exists ? doc.data() : null;
+      timerBox().textContent = formatTime(calculateTimeLeft());
+      if (timerInterval) clearInterval(timerInterval);
+      if (timerData && timerData.running && calculateTimeLeft() > 0) {
+        startTimerDisplay();
+      }
+    });
+  }
 
-    // Logout function
-    function logout() {
-      auth.signOut();
-    }
+  // TIMER CONTROL FUNCTIONS - only referee can call these
+  async function startTimer() {
+    const now = firebase.firestore.Timestamp.now();
+    let pausedAt = 0;
+    if (timerData && timerData.pausedAt) pausedAt = timerData.pausedAt;
+    await timerDoc.set({
+      startTime: now,
+      running: true,
+      pausedAt: pausedAt
+    });
+  }
 
-    // Save the new live result and update currentMatch doc
-    function saveResult() {
-      const teamA = teamAInput().value.trim();
-      const teamB = teamBInput().value.trim();
-      const scoreA = parseInt(scoreAInput().value);
-      const scoreB = parseInt(scoreBInput().value);
+  async function pauseTimer() {
+    if (!timerData || !timerData.running || !timerData.startTime) return;
 
-      if (!teamA || !teamB) {
-        alert('Please enter both team names.');
+    const now = Date.now();
+    const elapsed = (now - timerData.startTime.toMillis()) / 1000 + (timerData.pausedAt || 0);
+    await timerDoc.set({
+      ...timerData,
+      running: false,
+      pausedAt: elapsed
+    });
+  }
+
+  async function resetTimer() {
+    await timerDoc.set({
+      startTime: null,
+      running: false,
+      pausedAt: 0
+    });
+  }
+
+  // --- LIVE MATCH LOGIC ---
+
+  // Show latest live match from liveResults collection
+  function listenLatestLiveMatch() {
+    liveResultsCollection.orderBy('timestamp', 'desc').limit(1).onSnapshot(snapshot => {
+      if (snapshot.empty) {
+        liveMatchBox().innerHTML = `<h2>No live matches currently</h2>`;
         return;
       }
-      if (teamA.toLowerCase() === teamB.toLowerCase()) {
-        alert('Teams must be different.');
-        return;
-      }
-      if (isNaN(scoreA) || scoreA < 0 || isNaN(scoreB) || scoreB < 0) {
-        alert('Please enter valid non-negative scores.');
-        return;
-      }
+      const d = snapshot.docs[0].data();
+      liveMatchBox().innerHTML = `
+        <h2>Live Match</h2>
+        <div class="teams">${d.teamA} vs ${d.teamB}</div>
+        <div class="score">${d.scoreA} - ${d.scoreB}</div>
+      `;
+    });
+  }
 
-      // Add new live result record
-      db.collection('liveResults').add({
+  // Load current match data into input fields
+  async function loadCurrentMatch() {
+    const doc = await currentMatchDoc.get();
+    if (doc.exists) {
+      const data = doc.data();
+      teamAInput().value = data.teamA || '';
+      teamBInput().value = data.teamB || '';
+      scoreAInput().value = data.scoreA != null ? data.scoreA : '';
+      scoreBInput().value = data.scoreB != null ? data.scoreB : '';
+    } else {
+      teamAInput().value = '';
+      teamBInput().value = '';
+      scoreAInput().value = '';
+      scoreBInput().value = '';
+    }
+  }
+
+  // Authentication functions
+  function login() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    auth.signInWithEmailAndPassword(email, password).catch(err => alert('Login failed: ' + err.message));
+  }
+
+  function logout() {
+    auth.signOut();
+  }
+
+  // Save live result and update currentMatch doc
+  async function saveResult() {
+    const teamA = teamAInput().value.trim();
+    const teamB = teamBInput().value.trim();
+    const scoreA = parseInt(scoreAInput().value);
+    const scoreB = parseInt(scoreBInput().value);
+
+    if (!teamA || !teamB) {
+      alert('Please enter both team names.');
+      return;
+    }
+    if (teamA.toLowerCase() === teamB.toLowerCase()) {
+      alert('Teams must be different.');
+      return;
+    }
+    if (isNaN(scoreA) || scoreA < 0 || isNaN(scoreB) || scoreB < 0) {
+      alert('Please enter valid non-negative scores.');
+      return;
+    }
+
+    try {
+      await liveResultsCollection.add({
         teamA,
         teamB,
         scoreA,
         scoreB,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        // Update the currentMatch doc with the new teams and scores
-        return currentMatchDoc.set({
-          teamA,
-          teamB,
-          scoreA,
-          scoreB,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-      }).then(() => {
-        alert('Live result saved!');
-      }).catch(err => alert('Error saving result: ' + err.message));
+      });
+      await currentMatchDoc.set({
+        teamA,
+        teamB,
+        scoreA,
+        scoreB,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      alert('Live result saved!');
+    } catch (err) {
+      alert('Error saving result: ' + err.message);
     }
+  }
 
-    // Clear the saved current match data and inputs
-    function clearCurrentMatch() {
-      if (!confirm('Clear current teams and scores?')) return;
-
-      currentMatchDoc.delete().then(() => {
-        teamAInput().value = '';
-        teamBInput().value = '';
-        scoreAInput().value = '';
-        scoreBInput().value = '';
-        alert('Current match cleared.');
-      }).catch(err => alert('Error clearing current match: ' + err.message));
+  // Clear current match data
+  async function clearCurrentMatch() {
+    if (!confirm('Clear current teams and scores?')) return;
+    try {
+      await currentMatchDoc.delete();
+      teamAInput().value = '';
+      teamBInput().value = '';
+      scoreAInput().value = '';
+      scoreBInput().value = '';
+      alert('Current match cleared.');
+    } catch (err) {
+      alert('Error clearing current match: ' + err.message);
     }
+  }
 
-    // Manage UI based on auth state
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        userInfo().innerHTML = `Logged in as: ${user.email} <button onclick="logout()">Logout</button>`;
-        loginForm().style.display = 'none';
-        matchEditor().style.display = 'block';
+  // Auth state change UI management
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      userInfo().innerHTML = `Logged in as: ${user.email} <button onclick="logout()">Logout</button>`;
+      loginForm().style.display = 'none';
+      matchEditor().style.display = 'block';
 
-        teamAInput().disabled = false;
-        teamBInput().disabled = false;
-        scoreAInput().disabled = false;
-        scoreBInput().disabled = false;
+      teamAInput().disabled = false;
+      teamBInput().disabled = false;
+      scoreAInput().disabled = false;
+      scoreBInput().disabled = false;
 
-        loadCurrentMatch();
-      } else {
-        userInfo().textContent = '';
-        loginForm().style.display = 'block';
-        matchEditor().style.display = 'none';
+      loadCurrentMatch();
+    } else {
+      userInfo().textContent = '';
+      loginForm().style.display = 'block';
+      matchEditor().style.display = 'none';
 
-        teamAInput().disabled = true;
-        teamBInput().disabled = true;
-        scoreAInput().disabled = true;
-        scoreBInput().disabled = true;
-      }
-      listenLatestLiveMatch();
-    });
-  </script>
+      teamAInput().disabled = true;
+      teamBInput().disabled = true;
+      scoreAInput().disabled = true;
+      scoreBInput().disabled = true;
+    }
+    listenLatestLiveMatch();
+    listenTimer();
+  });
+</script>
 </head>
 <body>
   <header>
@@ -264,6 +374,8 @@
   </header>
 
   <main>
+    <div id="timer-box">05:00</div>
+
     <div id="live-match-box">
       Loading live match...
     </div>
@@ -271,14 +383,14 @@
     <div id="user-info"></div>
 
     <!-- Login Form -->
-    <div id="login-form" style="max-width: 320px;">
+    <div id="login-form" style="max-width: 350px;">
       <input id="email" type="email" placeholder="Email" />
       <input id="password" type="password" placeholder="Password" />
       <button onclick="login()">Log In</button>
     </div>
 
-    <!-- Match Editor (only visible after login) -->
-    <div id="match-editor" style="display:none; max-width: 320px; margin-top: 20px;">
+    <!-- Match Editor & Timer Controls (visible only after login) -->
+    <div id="match-editor" style="display:none; max-width: 350px; margin-top: 20px;">
       <label for="teamA">Team A Name:</label>
       <input id="teamA" type="text" placeholder="Team A name" disabled />
 
@@ -293,6 +405,14 @@
 
       <button onclick="saveResult()">Save Live Result</button>
       <button id="clear-btn" onclick="clearCurrentMatch()">Clear Current Match</button>
+
+      <hr style="margin: 20px 0;" />
+
+      <div id="timer-controls">
+        <button onclick="startTimer()">Start Timer</button>
+        <button onclick="pauseTimer()">Pause Timer</button>
+        <button onclick="resetTimer()">Reset Timer</button>
+      </div>
     </div>
   </main>
 </body>
