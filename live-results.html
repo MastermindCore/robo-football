@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Live Results | Robo-Football</title>
+  <link rel="stylesheet" href="style.css" />
+  
+  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+  <script>
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    function loadLiveResults() {
+      const container = document.getElementById('live-results');
+      container.innerHTML = 'Loading live results...';
+
+      db.collection('liveResults')
+        .orderBy('timestamp', 'desc')
+        .onSnapshot(snapshot => {
+          if (snapshot.empty) {
+            container.innerHTML = '<p>No live results yet.</p>';
+            return;
+          }
+          let html = '<table><thead><tr><th>Team A</th><th>Score</th><th>Team B</th><th>Score</th><th>Time</th></tr></thead><tbody>';
+          snapshot.forEach(doc => {
+            const d = doc.data();
+            const timeStr = d.timestamp ? new Date(d.timestamp.seconds * 1000).toLocaleString() : '...';
+            html += `
+              <tr>
+                <td>${d.teamA}</td>
+                <td>${d.scoreA}</td>
+                <td>${d.teamB}</td>
+                <td>${d.scoreB}</td>
+                <td>${timeStr}</td>
+              </tr>`;
+          });
+          html += '</tbody></table>';
+          container.innerHTML = html;
+        });
+    }
+
+    window.onload = loadLiveResults;
+  </script>
+</head>
+<body>
+  <header>
+    <h1>🤖 Robo-Football</h1>
+    <nav>
+      <a href="fixtures.html">Fixtures</a>
+      <a href="teams.html">Teams</a>
+      <a href="results.html">Results</a>
+      <a href="live-results.html">Live Results</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Live Results</h2>
+    <div id="live-results"></div>
+  </main>
+</body>
+</html>
