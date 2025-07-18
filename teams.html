@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Teams | Robo-Football</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="data.js" defer></script>
+  <script defer>
+    window.onload = () => {
+      const table = document.getElementById('teams');
+      teams.forEach(team => {
+        const row = `
+          <tr>
+            <td>${team.name}</td>
+            <td>${team.school}</td>
+            <td>${team.members.join(', ')}</td>
+          </tr>
+        `;
+        table.innerHTML += row;
+      });
+    };
+  </script>
+</head>
+<body>
+  <header>
+    <h1>🤖 Robo-Football</h1>
+    <nav>
+      <a href="fixtures.html">Fixtures</a>
+      <a href="teams.html">Teams</a>
+      <a href="results.html">Results</a>
+      <a href="live.html">Live Results</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>👥 Participating Teams</h2>
+    <p>Here is the list of all teams competing in the Robo-Football tournament.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Team Name</th>
+          <th>School</th>
+          <th>Members</th>
+        </tr>
+      </thead>
+      <tbody id="teams">
+        <!-- Rows inserted here -->
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>
