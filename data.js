@@ -4,3 +4,12 @@ const fixtures = [
   { match: 3, teamA: "Mech Ninjas", teamB: "Code Warriors", time: "11:00 AM", result: "0 - 0" },
   { match: 4, teamA: "Team Phoenix", teamB: "Steel Storm", time: "11:30 AM" }
 ];
+
+const teams = [
+  { name: "Robo Kings", school: "Tech High", members: ["Ali", "Kariuki"] },
+  { name: "Cyber Blasters", school: "Innovate School", members: ["Joy", "Kevin"] },
+  { name: "AI Strikers", school: "STEM Academy", members: ["Liam", "Zara"] },
+  { name: "Byte Brawlers", school: "CodeZone", members: ["David", "Amara"] },
+  { name: "Mech Ninjas", school: "Techno School", members: ["Nico", "Aisha"] },
+  { name: "Code Warriors", school: "RoboPrep", members: ["Ray", "Maya"] }
+];
