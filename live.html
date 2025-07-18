@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Live Results - Referee Panel</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => loadMatches())
+        .catch(err => alert("Login failed: " + err.message));
+    }
+
+    function loadMatches() {
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("match-editor").style.display = "block";
+
+      const container = document.getElementById("matches");
+      container.innerHTML = "";
+
+      db.collection("matches").get().then(snapshot => {
+        snapshot.forEach(doc => {
+          const match = doc.data();
+          container.innerHTML += `
+            <div style="margin-bottom:10px;">
+              <strong>${match.teamA} vs ${match.teamB}</strong><br>
+              Result: <input id="result-${doc.id}" value="${match.result}" />
+              <button onclick="updateResult('${doc.id}')">Update</button>
+            </div>`;
+        });
+      });
+    }
+
+    function updateResult(id) {
+      const newResult = document.getElementById(`result-${id}`).value;
+      db.collection("matches").doc(id).update({ result: newResult })
+        .then(() => alert("Updated!"))
+        .catch(err => alert("Error: " + err.message));
+    }
+  </script>
+</head>
+<body>
+  <h1>Referee Control Panel</h1>
+
+  <div id="login-form">
+    <p>Referee Login:</p>
+    <input id="email" placeholder="Email" /><br><br>
+    <input id="password" type="password" placeholder="Password" /><br><br>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="match-editor" style="display:none;">
+    <h2>Edit Match Results</h2>
+    <div id="matches"></div>
+  </div>
+</body>
+</html>
