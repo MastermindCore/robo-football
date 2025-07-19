@@ -10,6 +10,6 @@ const teams = [
   { name: "404 Not Found", school: "S.C.L.P Samaj", members: ["Juhil"] },
   { name: "LLC", school: "Linux", members: ["Alan"] },
   { name: "Vision IOT", school: "-", members: ["Francis",] },
-  { name: "Mech Ninjas", school: "Techno School", members: ["Nico", "Aisha"] },
-  { name: "Code Warriors", school: "RoboPrep", members: ["Ray", "Maya"] }
+  { name: "", school: "", members: ["", ""] },
+  { name: "", school: "", members: ["", ""] }
 ];
