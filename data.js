@@ -9,7 +9,7 @@ const teams = [
   { name: "RoboDynamo", school: "-", members: ["Ian", "Ethan"] },
   { name: "404 Not Found", school: "S.C.L.P Samaj", members: ["Juhil"] },
   { name: "LLC", school: "Linux", members: ["Alan"] },
-  { name: "Vision IOT", school: "-", members: ["Francis",] },
+  { name: "-", school: "-", members: ["-",] },
   { name: "", school: "", members: ["", ""] },
   { name: "", school: "", members: ["", ""] }
 ];
