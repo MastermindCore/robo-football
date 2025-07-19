@@ -4,7 +4,7 @@ const fixtures = [
   { match: 3, teamA: "RoboDynamos", teamB: "404 Not Found", time: "-", result: "5:0" },
   { match: 4, teamA: "BenSuperStrikers", teamB: "Elprocessor", time: "-", result: "7:0" },
   { match: 5, teamA: "solterra", teamB: "vision IOT", time: "-", result: "7:1" },
-  { match: 5, teamA: "Scorpy Bots", teamB: "Flence", time: "-", result: "7:2" },
+  { match: 6, teamA: "Scorpy Bots", teamB: "Flence", time: "-", result: "7:2" },
 ];
 
 const teams = [
