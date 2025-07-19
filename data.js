@@ -15,5 +15,6 @@ const teams = [
   { name: "Xord", school: "-", members: ["Kb"] },
   { name: "Orbitron", school: "-", members: ["David"] },
   { name: "Solterra", school: "-", members: ["Mano"] },
-  { name: "ElProcessor", school: "-", members: ["Omar"] }
+  { name: "ElProcessor", school: "-", members: ["Omar"] },
+  { name: "-", school: "S.C.L.P Samaj", members: ["Christian"] }
 ];
