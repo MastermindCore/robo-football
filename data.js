@@ -11,5 +11,8 @@ const teams = [
   { name: "LLC", school: "Linux", members: ["Alan"] },
   { name: "-", school: "Nyeri good Shepherd", members: ["Mark","Warugendo"] },
   { name: "BenZSuperStriker", school: "S.C.L.P Samaj", members: ["Rudra", "Arya","Vedansh"] },
-  { name: "Flence", school: "-", members: ["Elkana","Amon","Denis"] }
+  { name: "Flence", school: "-", members: ["Elkana","Amon","Denis"] },
+  { name: "Xord", school: "-", members: ["Kb"] },
+  { name: "Orbitron", school: "-", members: ["David"] },
+  { name: "Solterra", school: "-", members: ["Mano"] }
 ];
