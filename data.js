@@ -6,7 +6,7 @@ const fixtures = [
 ];
 
 const teams = [
-  { name: "RoboDynamo", school: "-", members: ["Ian", "Ethan"] },
+  { name: "RoboDynamo", school: "-", members: ["Ethan"] },
   { name: "404 Not Found", school: "S.C.L.P Samaj", members: ["Juhil"] },
   { name: "LLC", school: "Linux", members: ["Alan"] },
   { name: "-", school: "Nyeri good Shepherd", members: ["Mark","Warugendo"] },
@@ -17,5 +17,6 @@ const teams = [
   { name: "Solterra", school: "-", members: ["Mano"] },
   { name: "ElProcessor", school: "-", members: ["Omar"] },
   { name: "-", school: "S.C.L.P Samaj", members: ["Christian"] },
-  { name: "Botnaldo", school: "-", members: ["Shem","William"] }
+  { name: "Botnaldo", school: "-", members: ["Shem","William"] },
+  { name: "Scorpy Bot", school: "-", members: ["Ian"] }
 ];
