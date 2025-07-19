@@ -1,6 +1,7 @@
 const fixtures = [
   { match: 1, teamA: "LLC", teamB: "Nyeri Good Sheperd", time: "-", result: "5:1" },
   { match: 2, teamA: "Xord", teamB: "Sigma Bot", time: "-", result: "3:2" },
+  { match: 2, teamA: "RoboDynamos", teamB: "404 Not Found", time: "-", result: "5:0" },
 ];
 
 const teams = [
