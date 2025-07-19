@@ -6,7 +6,7 @@ const fixtures = [
 ];
 
 const teams = [
-  { name: "RoboDynamo", school: "", members: ["Ian", "Ethan"] },
+  { name: "RoboDynamo", members: ["Ian", "Ethan"] },
   { name: "Cyber Blasters", school: "Innovate School", members: ["Joy", "Kevin"] },
   { name: "AI Strikers", school: "STEM Academy", members: ["Liam", "Zara"] },
   { name: "Byte Brawlers", school: "CodeZone", members: ["David", "Amara"] },
